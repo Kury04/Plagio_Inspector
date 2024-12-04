@@ -16,5 +16,12 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
+def findSimilarity(text1, text2):
+    # Implementación para calcular similitud entre text1 y text2
+    similarity_percentage = 0  # Lógica para calcular el porcentaje de similitud
+    sources = []  # Si aplica, devuelve las fuentes o URLs relacionadas
+    return similarity_percentage, sources
+
+
 if __name__ == '__main__':
     main()

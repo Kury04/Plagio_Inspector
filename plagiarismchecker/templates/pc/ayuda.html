@@ -1,0 +1,131 @@
+{% load static %}
+{% load plagiarism_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis de Documentos</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@700&display=swap" rel="stylesheet">
+    <link href="{% static 'pc/ayuda.css' %}" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            background-color: rgb(244, 246, 248);
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #860d07">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <span>
+                <img src="{% static 'img/logoplagio.png' %}" alt="" class="logo">
+            </span>
+            Detector de Plagio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" style="margin-left: auto;">
+                <li class="nav-item nav-one">
+                    <a class="nav-link" href="{% url 'index' %}">Analisis<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item nav-two">
+                    <a class="nav-link" href="{% url 'compare' %}">Comparar Documentos</a>
+                </li>
+                <li class="nav-item nav-two">
+                    <a class="nav-link" href="{% url 'historial' %}">Historial</a>
+                </li>
+                <li class="nav-item nav-two">
+                    <a class="nav-link" href="{% url 'ayuda' %}">Ayuda</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-toggle="dropdown">
+                        {{ user.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="page-container">
+        <div class="plagiarism-header">
+            <h1>Evaluación de Plagio</h1>
+            <p>Analizamos los documentos y asignamos un porcentaje para identificar el nivel de plagio detectado.</p>
+        </div>
+        <div class="content">
+            <div class="chart-container">
+                <div class="plagiarism-chart">
+                    <div class="circle">
+                        <div class="inner-circle">
+                            <p class="percentage">75%</p>
+                            <p class="status">Alto Plagio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="legend">
+                <h2>Interpretación de Niveles</h2>
+                <div class="legend-item">
+                    <div class="icon green"></div>
+                    <span>0-20%: Bajo Plagio</span>
+                </div>
+                <div class="legend-item">
+                    <div class="icon yellow"></div>
+                    <span>21-30%: Riesgo Moderado</span>
+                </div>
+                <div class="legend-item">
+                    <div class="icon red"></div>
+                    <span>31-100%: Alto Plagio</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+</body>
+
+</html>

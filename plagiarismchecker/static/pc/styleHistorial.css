@@ -1,0 +1,236 @@
+body{
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-family: 'Roboto Mono', monospace;
+    height: 100%; 
+    background-color: rgb(227, 242, 255);   
+}
+.logo {
+position: absolute;  /* Posiciona el logo de forma absoluta */
+top: 10px;           /* Separa el logo 10px del borde superior */
+left: 20px;          /* Separa el logo 20px del borde izquierdo */
+width: 100px;        /* Define el ancho del logo */
+height: auto;        /* Ajusta la altura de manera proporcional */
+}  
+
+
+.tab-content-1{
+height: 100px;
+border: 2px solid rgb(131, 130, 130);
+border-radius: 4px;
+padding: 20px;
+background-color: white;
+}
+
+.navbar-brand {
+    font-family: "Libre Baskerville", serif; 
+    font-size: 36px; 
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.navbar-nav{
+font-size: 20px;     
+}
+
+.navbar-nav li :hover{
+background-color: #860d07;    
+border-bottom: 2px solid #430805;
+}
+
+.nav-two{
+margin-left: 40px;
+}
+
+.content-1{
+margin-top: 10px;
+}
+h1{
+text-align: center;
+}
+
+/* Inicio de la nueva tabla */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 50px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    top: 120px;
+}
+
+input[type="text"] {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    padding: 6px 12px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-filter {
+    background-color: #ff5c5c;
+    margin-right: 10px;
+}
+
+.btn-remove {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.selected-count {
+    background-color: #ff5c5c;
+    color: white;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f8f8f8;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    font-weight: bold;
+}
+
+button {
+    margin-right: 5px;
+}
+
+.btn-review {
+    background-color: #ff5c5c;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.btn-share {
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+/* Iconos (opcional si usas FontAwesome para iconos) */
+.fas {
+    margin-left: 5px;
+}
+
+
+/* Estilo para el boton de revisar y eliminar los archivos */
+.file-actions {
+    display: flex;
+    gap: 10px; /* Espaciado entre los botones */
+}
+
+.filename {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.review-button {
+    padding: 5px 15px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.review-button:hover {
+    background-color: #e85858;
+}
+
+.delete-button {
+    display: initial;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.delete-button img {
+    width: 20px;
+    height: 20px;
+}
+
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination .step-links {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .current {
+    font-weight: bold;
+    color: #333;
+}

@@ -1,0 +1,203 @@
+body {
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-family: 'Roboto Mono', monospace;
+    height: 100%;
+    background-color: rgb(227, 242, 255);
+}
+
+.top-left-text {
+    position: relative;
+    /* Posiciona el elemento de manera absoluta */
+    top: 50px;
+    /* Alinea el texto al borde superior */
+    right: 370px;
+    padding: 10px;
+    /* (Opcional) Añade un poco de espacio alrededor del texto */
+    font-size: 16px;
+    /* (Opcional) Tamaño de fuente */
+}
+
+.navbar-brand {
+    font-family: "Libre Baskerville", serif;
+    font-size: 36px;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.navbar-nav {
+    font-size: 20px;
+}
+
+.navbar-nav li :hover {
+    background-color: #860d07;
+    border-bottom: 2px solid #430805;
+}
+
+.nav-two {
+    margin-left: 40px;
+}
+
+.content-1 {
+    margin-top: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+
+.page-container {
+    padding: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.plagiarism-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.plagiarism-header h1 {
+    font-size: 2.5rem;
+    color: #860d07;
+    margin: 0;
+}
+
+.plagiarism-header p {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Estilo del gráfico circular */
+.chart-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    margin: 20px;
+}
+
+.plagiarism-chart {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background: conic-gradient(#f44336 0% 75%,
+            #ffc107 75% 90%,
+            #4caf50 90% 100%);
+    border-radius: 50%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.circle .inner-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-circle .percentage {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f44336;
+    margin: 0;
+    animation: pop-in 1s ease;
+}
+
+.inner-circle .status {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* Animación */
+@keyframes pop-in {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Leyenda */
+.legend {
+    flex: 1;
+    max-width: 400px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.legend h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.legend-item:last-child {
+    margin-bottom: 0;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.icon.green {
+    background-color: #4caf50;
+}
+
+.icon.yellow {
+    background-color: #ffc107;
+}
+
+.icon.red {
+    background-color: #f44336;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .chart-container,
+    .legend {
+        max-width: 100%;
+    }
+}

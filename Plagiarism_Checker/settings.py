@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
+
 from pathlib import Path
+
 #import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,6 +21,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 #django_heroku.settings(locals())
+
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Asegúrate de que BASE_DIR esté definido correctamente
+]
+
+# Nuevo codigo agregado 
+MEDIA_URL = '/media/'  # URL pública para acceder a los archivos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Ruta física en tu servidor
+
+
+LOGIN_URL = '/login/'  # URL para la página de login
+LOGIN_REDIRECT_URL = '/index/'  # Redirige después de iniciar sesión exitosamente
+LOGOUT_REDIRECT_URL = '/login/'  # Redirige después de cerrar sesión
 
 
 # Quick-start development settings - unsuitable for production
@@ -31,7 +49,7 @@ DEBUG = True
 
 #ALLOWED_HOSTS = ["127.0.0.1:8000"]
 
-ALLOWED_HOSTS = [ 'plagiarismcheckerpyresearch.herokuapp.com','localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = [ 'plagiarismcheckerpyresearch.herokuapp.com','localhost', '127.0.0.1']
 
 # Application definition
 
@@ -79,10 +97,25 @@ WSGI_APPLICATION = 'Plagiarism_Checker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# Ruta para almacenar archivos subidos 
+
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'plagioInspector',
+        'ENFORCE_SCHEMA': False,  # MongoDB es esquemático flexible
+        'CLIENT': {
+            'host': 'mongodb://localhost:27017/',  # Cambia según tu configuración
+        }
     }
 }
 
@@ -106,6 +139,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Autenticación predeterminada
+    'plagiarismchecker.backends.EmailAuthBackend',  # Autenticación por correo
+]
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -123,4 +163,3 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'

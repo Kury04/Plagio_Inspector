@@ -7,9 +7,10 @@ body{
 }
 
 .navbar-brand {
-    font-family: 'Sansita Swashed', cursive; 
-    font-size: 26px; 
-    margin-right: 40px;
+    font-family: "Libre Baskerville", serif; 
+    font-size: 36px; 
+    font-weight: 400;
+    font-style: normal;
 }
 
 .navbar-nav{
@@ -17,8 +18,8 @@ body{
 }
 
 .navbar-nav li :hover{
-    color: #2a9d8f;    
-    border-bottom: 2px solid #2a9d8f;
+    color: #860d07;    
+    border-bottom: 2px solid #430805;
 }
 
 .nav-two{
@@ -38,6 +39,99 @@ h1{
     margin: auto;
     align-items: center;
 }
+
+.text_one{
+    position: relative;
+    top: 50px;
+}
+
+/* Inicio del estilo para la tabla */
+/* Contenedor principal */
+.document-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    position: relative;
+    top: 50px;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Encabezado */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* Espacio entre elementos */
+}
+
+.header h2 {
+    margin: 0;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.header-buttons button, 
+.header-buttons input {
+    margin-right: 10px;
+}
+
+.add-btn, .delete-btn, .filter-btn, .analyze-btn {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+.filter-btn {
+    background-color: #ff4b5c;
+}
+
+.filter-count {
+    background-color: #ff4b5c;
+    color: white;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+/* Tabla */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.styled-table th, .styled-table td {
+    text-align: left;
+    padding: 10px;
+}
+
+.styled-table thead {
+    background-color: #f3f3f3;
+    border-bottom: 2px solid #dddddd;
+}
+
+.styled-table th {
+    font-weight: bold;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
 
 .tab-content-2{
     height: 450px;
@@ -61,16 +155,19 @@ textarea{
     margin-bottom: 10px;
 }
 
-#submit-button-1 {
-    margin-left: 100px;
-    background-color: #2a9d8f; 
-    color: white;
-}
-
 #submit-button-2{
     margin-left: 400px;
-    background-color: #2a9d8f; 
+    background-color:#860d07; 
     color: white;   
+    border-radius: 2rem;
+    text-overflow: ellipsis;
+}
+
+.filename {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #output {
@@ -94,7 +191,226 @@ textarea{
     padding-top: 43px;
     width: 155px;
     height: 155px;
-    border: 7px solid #2a9d8f;
+    border: 7px solid #264653;
     border-radius: 50%;
     text-align: center;
+}
+
+
+/* Boton de agregar archivos en comparar documentos */
+.upload-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #45a049;
+}
+
+
+
+#file-upload {
+    display: none;
+}
+
+#file-name {
+    max-width: 200px;
+    display: block;
+    margin-top: 10px;
+    color: #333;
+    font-size: 14px;
+}
+
+
+/* Estilos de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+thead {
+    background-color: #f4f4f4;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+} 
+
+
+/* Nuevos estilos */
+.action-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+.action2-button {
+    background-color: #ff0800;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-overflow: ellipsis;
+}
+
+.select-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #d1ecf1;
+}
+
+
+#searchInput {
+    padding: 10px;
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 10px;
+}
+
+#filterButton {
+    display: initial;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff5c5c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#filterButton:hover {
+    background-color: #ff5c5c;
+    display: initial;
+}
+
+#fileSelect {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Estilos para el boton de filtrar */
+#uploadButton, #filterButton, #searchButton {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#uploadButton {
+    background-color: #007bff;
+}
+
+#filterButton {
+    background-color: #ff5c5c;
+    display: initial;
+    align-items: center;
+}
+
+#searchButton {
+    background-color: #007bff;
+}
+
+#searchButton i, #selectButton i, #filterButton i {
+    font-size: 20px;
+    margin-right: 5px;
+    display: initial;
+} 
+
+#searchInput {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex-grow: 1;
+}
+
+#uploadButton:hover, #filterButton:hover, #searchButton:hover, #selectButton:hover { 
+    background-color: #860d07; 
+}
+
+.actions-container {
+    display: flex;
+    align-items: center; /* Centra los elementos verticalmente */
+    gap: 15px; /* Espaciado uniforme entre los elementos */
+}
+
+
+.file-actions {
+    display: flex;
+    gap: 10px; /* Espaciado entre los botones */
+}
+
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination .step-links {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .current {
+    font-weight: bold;
+    color: #333;
 }

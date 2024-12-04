@@ -40,45 +40,76 @@ def getQueries(text, n):
 
 
 def findSimilarity(text):
+
+    # Seleccionar un párrafo del texto (opcional: primer párrafo no vacío)
+    parrafos = [p.strip() for p in text.split('\n') if p.strip()]
+    parrafo_seleccionado = parrafos[0] if parrafos else "No se encontró texto para mostrar."
+
     # n-grams N VALUE SET HERE
     n = 9
     queries = getQueries(text, n)
     print('GetQueries task complete')
-    q = [' '.join(d) for d in queries]
+    
+    # Crear una lista de consultas válidas (sin elementos vacíos)
+    q = [' '.join(d) for d in queries if d]  
+    numqueries = min(len(q), 100)  # Limita las consultas a un máximo de 100
+
     output = {}
     c = {}
-    i = 1
-    while("" in q):
-        q.remove("")
-    count = len(q)
-    if count > 100:
-        count = 100
-    numqueries = count
-    for s in q[0:count]:
+    textos_plagiados = []  # Lista para almacenar los fragmentos plagiados
+    coincidencias = []  # Para almacenar texto plagiado con su URL
+    posiciones_texto_plagiado = []  # Para almacenar las posiciones del texto plagiado
+
+    for s in textos_plagiados:
+        for link, count in c.items():
+            if count > 0:
+                coincidencias.append({'texto': s.strip(), 'url': link})
+
+    for s in q[:numqueries]:  # Usa numqueries como límite
         output, c, errorCount = webSearch.searchWeb(s, output, c)
-        print('Web search task complete')
-        numqueries = numqueries - errorCount
-        # print(output,c)
-        sys.stdout.flush()
-        i = i+1
+        if errorCount == 0:  # Si no hubo error en la búsqueda
+            for link, count in c.items():
+                if count > 0:  # Si el enlace tiene resultados
+                    textos_plagiados.append(s)  # Agrega el fragmento que coincide
+                    start_index = text.find(s)  # Encuentra la posición del texto plagiado
+                    if start_index != -1:
+                        posiciones_texto_plagiado.append((start_index, start_index + len(s)))
+
     totalPercent = 0
     outputLink = {}
-    print(output, c)
     prevlink = ''
+
     for link in output:
-        percentage = (output[link]*c[link]*100)/numqueries
+        if numqueries > 0:
+            percentage = (output[link] * c[link] * 100) / numqueries
+        else:
+            percentage = 0
+
         if percentage > 10:
-            totalPercent = totalPercent + percentage
+            totalPercent += percentage
             prevlink = link
             outputLink[link] = percentage
         elif len(prevlink) != 0:
-            totalPercent = totalPercent + percentage
-            outputLink[prevlink] = outputLink[prevlink] + percentage
+            totalPercent += percentage
+            outputLink[prevlink] += percentage
         elif c[link] == 1:
-            totalPercent = totalPercent + percentage
-        print(link, totalPercent)
+            totalPercent += percentage
 
-    print(count, numqueries)
-    print(totalPercent, outputLink)
-    print("\nDone!")
-    return totalPercent, outputLink
+    print(f"Total Porcentaje: {totalPercent}")
+    print(f"Enlaces con porcentaje: {outputLink}")
+    print("\nProceso terminado.")
+
+    return totalPercent, outputLink, textos_plagiados, coincidencias, posiciones_texto_plagiado 
+
+def findSimilarity2(text1, text2):
+    # Lógica para calcular el porcentaje de similitud
+    from difflib import SequenceMatcher
+
+    # Comparar los textos y calcular similitud
+    similarity_ratio = SequenceMatcher(None, text1, text2).ratio()
+    similarity_percentage = similarity_ratio * 100
+
+    # Retornar el porcentaje y, opcionalmente, las fuentes analizadas
+    return similarity_percentage, []
+
+

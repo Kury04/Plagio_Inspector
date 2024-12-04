@@ -1,11 +1,13 @@
 {% load static %}
+{% load plagiarism_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inspector Plagio | Inicio</title>
+  <title>Analisis de Documentos</title>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -17,31 +19,34 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@700&display=swap" rel="stylesheet">
   <link href="{% static 'pc/styles.css' %}" rel="stylesheet" type="text/css">
   <style>
     body {
-      background-color: rgb(227, 242, 255);
+      background-color: rgb(244, 246, 248);
     }
   </style>
+
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #860d07;">
-    <a class="navbar-brand" href="{% url 'plagiarism-check-mainpage' %}">
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #860d07">
+    <a class="navbar-brand" href="{% url 'index' %}">
       <span>
-        <img src="{% static 'img/logoplagio.png' %}" alt="Logo" class="logo">
+        <img src="{% static 'img/logoplagio.png' %}" alt="" class="logo">
       </span>
-      Inspector de Plagio
-    </a>
+      Detector de Plagio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav" style="margin-left: auto;">
         <li class="nav-item nav-one">
-          <a class="nav-link" href="{% url 'plagiarism-check-mainpage' %}">Inicio</a>
+          <a class="nav-link" href="{% url 'index' %}">Analisis<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item nav-two">
           <a class="nav-link" href="{% url 'compare' %}">Comparar Documentos</a>
@@ -49,22 +54,37 @@
         <li class="nav-item nav-two">
           <a class="nav-link" href="{% url 'historial' %}">Historial</a>
         </li>
+        <li class="nav-item nav-two">
+          <a class="nav-link" href="{% url 'ayuda' %}">Ayuda</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-toggle="dropdown">
+            {{ user.username }}
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
+          </div>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+        </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
 
   <div class="container content-1">
     <div class="col-md-6 offset-3 text-content">
-      <p>¡Elija un archivo o ingrese texto para iniciar la búsqueda!</p>
+      <div class="top-left-text">
+        <p style="margin-top: -40px;">¡Elija un archivo o ingrese texto para inicar la busqueda!</p>
+      </div>
       <div class="tab-content-1">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="text-tab" data-toggle="tab" href="#text-input-ws" role="tab"
               aria-controls="text-input-ws" aria-selected="true" onclick="makeInvisible()">Texto</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="file-tab" data-toggle="tab" href="#file-input-ws" role="tab"
-              aria-controls="file-input-ws" aria-selected="false" onclick="makeVisible()">Archivo</a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -74,17 +94,12 @@
               <textarea id="text-1" name="q" required>{{ text }}</textarea>
             </form>
           </div>
-          <div class="tab-pane fade" id="file-input-ws" role="tabpanel" aria-labelledby="file-tab">
-            <form id="form2-ws" action="/filetest/" enctype="multipart/form-data" method="POST">
-              {% csrf_token %}
-              <input id="id_docfile" required type="file" name="docfile" />
-            </form>
-          </div>
+
         </div>
       </div>
       <div class="col-md-9">
-        <button type="submit" form="form1-ws" id="submit-button-1" class="btn">Ejecutar búsqueda</button>
-        <button type="submit" form="form2-ws" id="submit-button-2" class="btn">Ejecutar búsqueda</button>
+        <button type="submit" form="form1-ws" id="submit-button-1" class="btn">Ejecutar busqueda</button>
+        <button type="submit" form="form2-ws" id="submit-button-2" class="btn">Ejecutar busqueda</button>
       </div>
     </div>
 
@@ -94,23 +109,37 @@
           <h3>Resultado</h3>
           <ul class="output-list-1">
             {% for links in link %}
-              <li>{{ links }}</li>
+            <li>{{ links }}</li>
             {% endfor %}
-          </ul>
         </div>
+
         <div class="col-md-6 result-2" style="text-align: center; align-items: center;">
           <p class="output-per-tot">{{ percent }}%</p>
-          <p>Porcentaje de Plagiado</p>
+          <div class="top-text">
+            <p>Porcentaje de Plagiado</p>
+          </div>
         </div>
+
       </div>
     </div>
 
     <!-- Texto Analizado Resaltado -->
-    <div class="highlighted-output">
-      <h3>Texto Analizado</h3>
-      <p>{{ highlighted_text|safe }}</p>
+    <h3>Texto Analizado</h3>
+    <div style="border: 1px solid #ccc; padding: 10px; height: 200px; overflow-y: scroll;">
+      {% for oracion in oraciones_resaltadas %}
+      {% if oracion.coincidencia %}
+      <span class="highlighted-text">
+        {{ oracion.texto }}.
+        <a href="{{ oracion.coincidencia }}" target="_blank">(Fuente)</a>
+      </span>
+      {% else %}
+      {{ oracion.texto }}
+      {% endif %}
+      {% endfor %}
     </div>
+
   </div>
+
 
   <script>
     function makeVisible() {
@@ -128,9 +157,11 @@
   <!-- JQuery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 </body>

@@ -5,39 +5,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plagio Inspector | Comparar Documentos</title>
-    
-    <!-- Icono de página -->
-    <link rel="icon" href="navidad2.jpg">
-    
+    <title>Comparar Documentos</title>
+
+    <!-- Coloca el enlace al icono de tu logo aquí -->
+    <link rel="icon" href="">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@700&display=swap" rel="stylesheet">
     <link href="{% static 'pc/stylesDocCheck.css' %}" rel="stylesheet" type="text/css">
-    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
-        body {
-            background-color: rgb(227, 242, 255);
+        body{
+            background-color: rgb(244, 246, 248);
         }
     </style>
 </head>
 
 <body>
-    <!-- Barra de Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #264653;">
-        <a class="navbar-brand" href="{% url 'plagiarism-check-mainpage' %}">Plagio Inspector</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #860d07">
+        <a class="navbar-brand" href="{% url 'index' %}">Detector de Plagio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" style="margin-left: auto;">
                 <li class="nav-item nav-one">
-                    <a class="nav-link" href="{% url 'plagiarism-check-mainpage' %}">Inicio</a>
+                    <a class="nav-link" href="{% url 'index' %}">Analisis<span
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item nav-two">
                     <a class="nav-link" href="{% url 'compare' %}">Comparar Documentos</a>
@@ -45,77 +52,143 @@
                 <li class="nav-item nav-two">
                     <a class="nav-link" href="{% url 'historial' %}">Historial</a>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-toggle="dropdown">
+                    {{ user.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
 
-    <!-- Contenido Principal -->
     <div class="container content-1">
         <div class="text-content">
-            <p>¡Puedes comparar dos archivos entre sí o escoger compararlo contra la web!</p>
 
-            <!-- Opciones de Comparación -->
-            <div class="row">
-                <!-- Comparación de Texto -->
-                <div class="col-md-5 tab-content-2">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="text-tab-2" data-toggle="tab" href="#text-input-dc-1" role="tab" aria-controls="text-input-dc-1" aria-selected="true">Texto</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="text-input-dc-1" role="tabpanel">
-                            <form id="form1-ws" action="/twofiletest1/" method="POST">
-                                {% csrf_token %}
-                                <textarea id="text-in-1" name="q1" required>{{ text1 }}</textarea><br>
-                                <textarea id="text-1" name="q2" required>{{ text2 }}</textarea>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Comparación de Archivos -->
-                <div class="col-md-5 tab-content-2">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="file-tab-3" data-toggle="tab" href="#file-input-dc-2" role="tab" aria-controls="file-input-dc-2" aria-selected="true">Archivos</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="file-input-dc-2" role="tabpanel">
-                            <form id="form2-ws" action="/twofilecompare1/" enctype="multipart/form-data" method="POST">
-                                {% csrf_token %}
-                                <input type="file" class="fileupload" id="fileupload" name="docfile1" required>
-                                <input type="file" class="fileupload" id="fileupload" name="docfile2" required>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+            <div class="text_one">
+                <p>¡Puedes comparar dos archivos entre si o escoger compararlo contra la web!</p>
             </div>
 
-            <!-- Botones de Acción -->
-            <div class="row button-align">
-                <button type="submit" form="form1-ws" id="submit-button-1" class="btn">Comparar los Textos</button>
-                <button type="submit" form="form2-ws" id="submit-button-2" class="btn submit-button-2">Comparar los Archivos</button>
-            </div>
+            <div class="document-container">
+                <div class="header">
+                    <h2>Mis documentos</h2>
 
-            <!-- Resultados -->
-            <ul style="text-align: center;">
-                <li class="output-per" style="list-style:none">{{ result }}%</li>
-            </ul>
+                    <div class="upload-container">
+                        <form action="{% url 'subir_archivo' %}" id="uploadForm" method="post" enctype="multipart/form-data">
+                            {% csrf_token %} 
+                            <label for="file-upload" class="custom-file-upload">
+                                +
+                            </label>
+                            <input id="file-upload" name="archivo" type="file" accept=".pdf,.doc,.docx,.txt" required />
+                            <button type="submit">Subir</button>
+                        </form>
+                    </div>
+
+                    <div class="header-buttons">
+                        <form action="{% url 'compare' %}" method="get">
+                            <input type="text" name="q" placeholder="Buscar..." id="searchInput" value="{{ request.GET.q }}">
+                            <button id="filterButton"><i class="fa fa-filter"></i> Filtrar</button>
+                        </form>
+                    </div>
+                </div>
+                
+                    <table class="tabla'documentos">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre del Archivo</th>
+                                <th>Fecha de Subida</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if archivos %}
+                                {% for archivo in archivos  %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td class="filename">{{ archivo.NOMBRE }}</td>
+                                        <td>{{ archivo.FECHA_SUBIDA }}</td>
+                                        <td class="file-actions">
+                                            <!-- Acción: Comparar contra la web -->
+                                                <form action="{% url 'ejecutar_busqueda' archivo.NOMBRE %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="action-button"><i class="fa fa-globe"></i></button>
+                                                </form>
+
+                                            <!-- Acción: Comparar entre documentos -->
+                                            <form action="{% url 'comparar_documentos' %}" method="post" style="display:inline;">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="archivo1" value="{{ archivo.NOMBRE }}">
+                                                <select name="archivo2" required style="max-width: 100px;">
+                                                    <option disabled selected>Archivos</option>
+                                                    {% for otro_archivo in archivos %}
+                                                        {% if otro_archivo.NOMBRE != archivo.NOMBRE %}
+                                                            <option value="{{ otro_archivo.NOMBRE }}">{{ otro_archivo.NOMBRE }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                                <button type="submit" class="action2-button">Comparar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">No se encontraron archivos.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                        
+                    </table>
+
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1">&laquo; Primera</a>
+                                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                            {% endif %}
+                    
+                            <span class="current">
+                                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                            </span>
+                    
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+            </div>
         </div>
     </div>
 
-    <!-- Texto Analizado Resaltado -->
-    <div class="highlighted-output">
-        <h3>Texto Analizado</h3>
-        <p>{{ highlighted_text|safe }}</p>
-    </div>
 
-    <!-- Scripts JS -->
+    <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+    <!-- Nuevo Script -->
+    <script type="text/javascript"
+    src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="script.js"></script>
 </body>
+
 </html>

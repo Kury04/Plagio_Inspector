@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coincidencias</title>
+
+    <!-- Coloca el enlace al icono de tu logo aquí -->
+    <link rel="icon" href="">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@700&display=swap" rel="stylesheet">
+    <link href="{% static 'pc/revisar.css' %}" rel="stylesheet" type="text/css">
+    <style>
+        body{
+            background-color: rgb(244, 246, 248);
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #860d07">
+        <a class="navbar-brand" href="{% url 'index' %}">Detector de Plagio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" style="margin-left: auto;">
+                <li class="nav-item nav-one">
+                    <a class="nav-link" href="{% url 'index' %}">Analisis<span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item nav-two">
+                    <a class="nav-link" href="{% url 'compare' %}">Comparar Documentos</a>
+                </li>
+                <li class="nav-item nav-two">
+                    <a class="nav-link" href="{% url 'historial' %}">Historial</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+        <div class="container">
+
+            <main>
+                <section class="file-info">
+                    <h2>Información del Documento</h2>
+                    <p><strong>Nombre del Archivo: </strong>{{ archivo.NOMBRE }}</p>
+                    <p><strong>Subido el: </strong>{{ archivo.FECHA_SUBIDA }}</p>
+                </section>
+
+                <section class="plagiarism-results">
+                    <h2>Índice de Copia</h2>
+                        <div class="plagiarism-percentage
+                            {% if plagio.PORCENTAJE < 20 %}
+                                low
+                            {% elif plagio.PORCENTAJE < 30 %}
+                                moderate
+                            {% else %}
+                                high
+                            {% endif %}">
+                            {{ plagio.PORCENTAJE }}%
+                        </div>
+                    <p>Texto en la web</p>
+                </section>
+
+                <section class="sources-found">
+                    <h2>Fuentes Encontradas</h2>
+                    <ul>
+                        <li>
+                            <ul>
+                                {% for enlace in plagio.ENLACES %}
+                                <li><a href="{{ enlace }}" target="_blank">{{ enlace }}</a></li>
+                                {% endfor %}
+                            </ul>
+                            <span class="copy-percentage">{{ plagio.PORCENTAJE }}%</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Nueva sección para mostrar el texto plagiado -->
+                <section class="plagiarized-text">
+                    <h2>Texto Plagiado</h2>
+                    <div class="plagiarized-fragments" style="border: 1px solid #ccc; padding: 10px; height: 200px; overflow-y: scroll;">
+                        {% if plagio.TEXTO_RESALTADO  %}
+                            <p>{{ plagio.TEXTO_RESALTADO|safe }}</p>
+                        {% else %}
+                            <p>No se encontró un párrafo destacado en el archivo.</p>
+                        {% endif %}
+                    </div>
+                </section>
+
+
+            </main>
+            <footer>
+                <a href="{% url 'historial' %}" class="button">Regresar al Historial</a>
+            </footer>
+        </div>
+
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+    <!-- Nuevo Script -->
+    <script type="text/javascript"
+    src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="script.js"></script>
+</body>
+
+
+
+
+</html>
