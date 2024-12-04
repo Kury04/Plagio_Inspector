@@ -49,7 +49,7 @@ DEBUG = True
 
 #ALLOWED_HOSTS = ["127.0.0.1:8000"]
 
-ALLOWED_HOSTS = [ 'plagiarismcheckerpyresearch.herokuapp.com','localhost', '127.0.0.1']
+ALLOWED_HOSTS = [ 'plagiarismcheckerpyresearch.herokuapp.com','localhost', '127.0.0.1', '*']
 
 # Application definition
 
